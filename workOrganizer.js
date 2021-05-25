@@ -4,8 +4,21 @@ workers.forEach(worker => {
   worker.addEventListener('dragstart', dragStartHandler)
 })
 
+
+// Hacky solution towards dragging and dropping dynamic elements
+setInterval(() => {
+  workers = Array.from(document.querySelectorAll('.worker'))
+
+  workers.forEach(worker => {
+    worker.addEventListener('dragstart', dragStartHandler)
+
+    console.log(worker)
+  })
+}, 0)
+
 function dragStartHandler(event) {
   event.dataTransfer.setData('text/plain', event.target.id)
+  console.log(event.target.id)
   setTimeout(() => {
     event.target.classList.add('hide')
   }, 0)
@@ -49,8 +62,10 @@ function drop(event) {
     event.target.classList.remove('drag-over')
 
     const id = event.dataTransfer.getData('text/plain')
-    const draggableElement = document.querySelector(`#${id}`)
+    const draggableElement = document.getElementById(id)
   
+    console.log(draggableElement)
+
     event.target.append(draggableElement)
   
     draggableElement.classList.remove('hide')
@@ -75,16 +90,13 @@ document.addEventListener('click', event => {
 
 let i = 1;
 
-
-
 function addWorker() {
   i++
-
-  workers = Array.from(document.querySelectorAll('.worker'))
 
   const newInput = document.createElement('input')
   newInput.setAttribute('class', 'worker')
   newInput.setAttribute('id', `worker-${i}`)
+  newInput.setAttribute('draggable', `true`)
   document.querySelector('#idle-zone').append(newInput)
 }
 
