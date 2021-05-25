@@ -1,0 +1,20 @@
+{
+  "name": "workOrganizer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "workOrganizer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanAmbitous/Work-Organizer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanAmbitous/Work-Organizer/issues"
+  },
+  "homepage": "https://github.com/DanAmbitous/Work-Organizer#readme"
+}
