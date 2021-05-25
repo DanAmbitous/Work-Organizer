@@ -5,17 +5,6 @@ function dragDropFunctionlity() {
     worker.addEventListener('dragstart', dragStartHandler)
   })
 
-  console.log(workers)
-
-  // Hacky solution towards dragging and dropping dynamic elements
-  // setInterval(() => {
-  //   workers = Array.from(document.querySelectorAll('.worker'))
-
-  //   workers.forEach(worker => {
-  //     worker.addEventListener('dragstart', dragStartHandler)
-  //   })
-  // }, 0)
-
   function dragStartHandler(event) {
     event.dataTransfer.setData('text/plain', event.target.id)
     setTimeout(() => {
@@ -103,9 +92,15 @@ function addWorker() {
 }
 
 function addZone() {
+  const newZoneContainer = document.createElement('div')
+  const titleInput = document.createElement('input')
+  titleInput.setAttribute('class', 'zone-title')
+  titleInput.setAttribute('placeholder', 'Name the zone')
   const newDiv = document.createElement('div')
   newDiv.setAttribute('class', 'zone')
-  document.querySelector('.grid-container').append(newDiv)
+  newZoneContainer.append(titleInput)
+  newZoneContainer.append(newDiv)
+  document.querySelector('.grid-container').append(newZoneContainer)
 }
 
 function visibilityStateIdentifier() {

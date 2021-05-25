@@ -11,13 +11,6 @@ div {
   padding: 1%;
 }
 
-input {
-  border-radius: 50%;
-  outline: none;
-  border: 5px solid #333;
-  cursor: pointer;
-}
-
 .grid-container {
   padding: 0;
 }
@@ -35,14 +28,22 @@ input {
   background-color: #222;
 }
 
+.zone-title {
+  position: relative;
+}
+
 .worker {
+  cursor: pointer;
+  border-radius: 50%;
+  outline: none;
+  border: 5px solid #333;
+  cursor: pointer;
   background-color: white;
   border-radius: 50%;
   width: 100px;
   height: 100px;
   display: block;
   word-break: break-all;
-  cursor: pointer;
 }
 
 .text-content {
