@@ -1,11 +1,13 @@
-const worker = document.querySelector('.worker')
+let workers = Array.from(document.querySelectorAll('.worker'))
 
-worker.addEventListener('dragstart', dragStart)
+workers.forEach(worker => {
+  worker.addEventListener('dragstart', dragStartHandler)
+})
 
-function dragStart(event) {
+function dragStartHandler(event) {
   event.dataTransfer.setData('text/plain', event.target.id)
   setTimeout(() => {
-    document.querySelector('#idle-zone').append(event.target)
+    event.target.classList.add('hide')
   }, 0)
 }
 
@@ -19,30 +21,77 @@ zones.forEach(zone => {
 })
 
 function dragEnter(event) {
-  event.preventDefault()
-  event.target.classList.add('drag-over');
-
+  event.preventDefault();
+  event.target.classList.add('drag-over')
 }
 
 function dragOver(event) {
-  event.preventDefault()
-
-  event.target.classList.add('drag-over');
-
+  event.preventDefault();
+  event.target.classList.add('drag-over')
 }
 
 function dragLeave(event) {
-  event.target.classList.remove('drag-over');
-
+  event.target.classList.remove('drag-over')
 }
 
+//Fix the DRY 
 function drop(event) {
-  event.target.classList.remove('drag-over');
+  if (event.target.classList.contains('worker')) {
+    event.target.classList.remove('drag-over')
 
-  const id = event.dataTransfer.getData('text/plain')
-  const draggable = document.getElementById(id)
+    const id = event.dataTransfer.getData('text/plain')
+    const draggableElement = document.querySelector(`#${id}`)
 
-  event.target.append(draggable)
+    event.target.parentElement.append(draggableElement)
 
-  draggable.classList.remove('hide')
+    draggableElement.classList.remove('hide')
+  } else {
+    event.target.classList.remove('drag-over')
+
+    const id = event.dataTransfer.getData('text/plain')
+    const draggableElement = document.querySelector(`#${id}`)
+  
+    event.target.append(draggableElement)
+  
+    draggableElement.classList.remove('hide')
+  }
+}
+
+
+
+
+document.addEventListener('click', event => {
+  const clickedElement = event.target.id
+
+  switch (clickedElement) {
+    case 'add':
+      visibilityStateIdentifier()
+      break
+    case 'add-worker':
+      addWorker()
+      break
+  }
+})
+
+let i = 1;
+
+
+
+function addWorker() {
+  i++
+
+  workers = Array.from(document.querySelectorAll('.worker'))
+
+  const newInput = document.createElement('input')
+  newInput.setAttribute('class', 'worker')
+  newInput.setAttribute('id', `worker-${i}`)
+  document.querySelector('#idle-zone').append(newInput)
+}
+
+function visibilityStateIdentifier() {
+  if (document.querySelector('.add-specification').classList.contains('visibility-toggler')) {
+    document.querySelector('.add-specification').classList.remove('visibility-toggler')
+  } else {
+    document.querySelector('.add-specification').classList.add('visibility-toggler')
+  }
 }

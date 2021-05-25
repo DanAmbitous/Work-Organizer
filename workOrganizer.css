@@ -2,9 +2,37 @@ body {
   margin: 0;
 }
 
+button {
+  cursor: pointer;
+}
+
 div {
-  background-color: blue;
+  background-color: #333;
   padding: 1%;
+}
+
+input {
+  border-radius: 50%;
+  outline: none;
+  border: 5px solid #333;
+  cursor: pointer;
+}
+
+.grid-container {
+  padding: 0;
+}
+
+#idle-zone {
+  background-color: yellow;
+  background-image: repeating-linear-gradient(45deg, #333 0, yellow 20px, transparent 20px, transparent 40px );
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.input-container {
+  display: flex;
+  background-color: #222;
 }
 
 .worker {
@@ -26,12 +54,24 @@ div {
   font-size: 1rem;
 }
 
+/* .add-specification {
+  visibility: hidden;
+} */
+
+.visibility-toggler {
+  visibility: hidden;
+}
+
 .hide {
   display: none;
 }
 
 .drag-over {
   border: dashed 3px red;
+}
+
+.drag-effect {
+  box-shadow: 0 0px 20px 10px rgb(0 0 0);
 }
 
 /* 
