@@ -22,13 +22,21 @@ function dragDropFunctionlity() {
   })
 
   function dragEnter(event) {
-    event.preventDefault();
-    event.target.classList.add('drag-over')
+    if (event.target.classList.contains('worker')) {
+      event.target.classList.remove('drag-over')
+    } else {
+      event.preventDefault();
+      event.target.classList.add('drag-over')
+    }
   }
 
   function dragOver(event) {
-    event.preventDefault();
-    event.target.classList.add('drag-over')
+    if (event.target.classList.contains('worker')) {
+      event.target.classList.remove('drag-over')
+    } else {
+      event.preventDefault();
+      event.target.classList.add('drag-over')
+    }
   }
 
   function dragLeave(event) {
@@ -76,8 +84,34 @@ document.addEventListener('click', event => {
       addZone()
       dragDropFunctionlity()
       break
+    case 'remove':
+      visibilityStateIdentifierRemove()
+      break
+    case 'remove-worker':
+      removeWorker()
+      break
   }
 })
+
+function visibilityStateIdentifierRemove() {
+  if (document.querySelector('.remove-specification').classList.contains('visibility-toggler')) {
+    document.querySelector('.remove-specification').classList.remove('visibility-toggler')
+  } else {
+    document.querySelector('.remove-specification').classList.add('visibility-toggler')
+  }
+}
+
+function removeWorker() {
+  removeModeWorkers()
+}
+
+function removeModeWorkers() {
+  const workers = document.querySelectorAll('.worker')
+  
+  workers.forEach(worker => {
+    worker.closest('input').value = 'x'
+  })
+}
 
 let i = 1;
 
