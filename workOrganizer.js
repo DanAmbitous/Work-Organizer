@@ -1,79 +1,76 @@
-let workers = Array.from(document.querySelectorAll('.worker'))
-
-workers.forEach(worker => {
-  worker.addEventListener('dragstart', dragStartHandler)
-})
-
-
-// Hacky solution towards dragging and dropping dynamic elements
-setInterval(() => {
-  workers = Array.from(document.querySelectorAll('.worker'))
+function dragDropFunctionlity() {
+  let workers = Array.from(document.querySelectorAll('.worker'))
 
   workers.forEach(worker => {
     worker.addEventListener('dragstart', dragStartHandler)
-
-    console.log(worker)
   })
-}, 0)
 
-function dragStartHandler(event) {
-  event.dataTransfer.setData('text/plain', event.target.id)
-  console.log(event.target.id)
-  setTimeout(() => {
-    event.target.classList.add('hide')
-  }, 0)
-}
+  console.log(workers)
 
-const zones = document.querySelectorAll('.zone')
+  // Hacky solution towards dragging and dropping dynamic elements
+  // setInterval(() => {
+  //   workers = Array.from(document.querySelectorAll('.worker'))
 
-zones.forEach(zone => {
-  zone.addEventListener('dragenter', dragEnter)
-  zone.addEventListener('dragover', dragOver);
-  zone.addEventListener('dragleave', dragLeave);
-  zone.addEventListener('drop', drop);
-})
+  //   workers.forEach(worker => {
+  //     worker.addEventListener('dragstart', dragStartHandler)
+  //   })
+  // }, 0)
 
-function dragEnter(event) {
-  event.preventDefault();
-  event.target.classList.add('drag-over')
-}
+  function dragStartHandler(event) {
+    event.dataTransfer.setData('text/plain', event.target.id)
+    setTimeout(() => {
+      event.target.classList.add('hide')
+    }, 0)
+  }
 
-function dragOver(event) {
-  event.preventDefault();
-  event.target.classList.add('drag-over')
-}
+  const zones = document.querySelectorAll('.zone')
 
-function dragLeave(event) {
-  event.target.classList.remove('drag-over')
-}
+  zones.forEach(zone => {
+    zone.addEventListener('dragenter', dragEnter)
+    zone.addEventListener('dragover', dragOver);
+    zone.addEventListener('dragleave', dragLeave);
+    zone.addEventListener('drop', drop);
+  })
 
-//Fix the DRY 
-function drop(event) {
-  if (event.target.classList.contains('worker')) {
+  function dragEnter(event) {
+    event.preventDefault();
+    event.target.classList.add('drag-over')
+  }
+
+  function dragOver(event) {
+    event.preventDefault();
+    event.target.classList.add('drag-over')
+  }
+
+  function dragLeave(event) {
     event.target.classList.remove('drag-over')
+  }
 
-    const id = event.dataTransfer.getData('text/plain')
-    const draggableElement = document.querySelector(`#${id}`)
+  //Fix the DRY 
+  function drop(event) {
+    if (event.target.classList.contains('worker')) {
+      event.target.classList.remove('drag-over')
 
-    event.target.parentElement.append(draggableElement)
+      const id = event.dataTransfer.getData('text/plain')
+      const draggableElement = document.querySelector(`#${id}`)
 
-    draggableElement.classList.remove('hide')
-  } else {
-    event.target.classList.remove('drag-over')
+      event.target.parentElement.append(draggableElement)
 
-    const id = event.dataTransfer.getData('text/plain')
-    const draggableElement = document.getElementById(id)
-  
-    console.log(draggableElement)
+      draggableElement.classList.remove('hide')
+    } else {
+      event.target.classList.remove('drag-over')
 
-    event.target.append(draggableElement)
-  
-    draggableElement.classList.remove('hide')
+      const id = event.dataTransfer.getData('text/plain')
+      const draggableElement = document.getElementById(id)
+    
+      event.target.append(draggableElement)
+    
+      draggableElement.classList.remove('hide')
+    }
   }
 }
 
-
-
+dragDropFunctionlity()
 
 document.addEventListener('click', event => {
   const clickedElement = event.target.id
@@ -84,6 +81,11 @@ document.addEventListener('click', event => {
       break
     case 'add-worker':
       addWorker()
+      dragDropFunctionlity()
+      break
+    case 'add-zone':
+      addZone()
+      dragDropFunctionlity()
       break
   }
 })
@@ -98,6 +100,12 @@ function addWorker() {
   newInput.setAttribute('id', `worker-${i}`)
   newInput.setAttribute('draggable', `true`)
   document.querySelector('#idle-zone').append(newInput)
+}
+
+function addZone() {
+  const newDiv = document.createElement('div')
+  newDiv.setAttribute('class', 'zone')
+  document.querySelector('.grid-container').append(newDiv)
 }
 
 function visibilityStateIdentifier() {
