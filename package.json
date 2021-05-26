@@ -4,7 +4,8 @@
   "description": "",
   "main": "workOrganizer.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,11 @@
   "bugs": {
     "url": "https://github.com/DanAmbitous/Work-Organizer/issues"
   },
-  "homepage": "https://github.com/DanAmbitous/Work-Organizer#readme"
+  "homepage": "https://github.com/DanAmbitous/Work-Organizer#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
 }

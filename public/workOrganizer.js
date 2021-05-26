@@ -90,6 +90,8 @@ document.addEventListener('click', event => {
     case 'remove-worker':
       removeWorker()
       break
+    case 'credit':
+      window.location.replace("credit");
   }
 })
 
