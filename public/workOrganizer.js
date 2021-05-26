@@ -70,9 +70,11 @@ function dragDropFunctionlity() {
 dragDropFunctionlity()
 
 document.addEventListener('click', event => {
-  const clickedElement = event.target.id
+  const clickedElementId = event.target.id
 
-  switch (clickedElement) {
+  const clickedElementClass = event.target.className
+
+  switch (clickedElementId) {
     case 'add':
       visibilityStateIdentifier()
       break
@@ -90,10 +92,20 @@ document.addEventListener('click', event => {
     case 'remove-worker':
       removeWorker()
       break
-    case 'credit':
-      window.location.replace("credit");
+  }
+
+  switch(clickedElementClass) {
+    case 'remove-container':
+      removeFunctionality(event)
+      break
   }
 })
+
+function removeFunctionality(event) {
+  const containerElement = event.target.closest('.worker-container')
+
+  containerElement.remove()
+}
 
 function visibilityStateIdentifierRemove() {
   if (document.querySelector('.remove-specification').classList.contains('visibility-toggler')) {
@@ -104,14 +116,48 @@ function visibilityStateIdentifierRemove() {
 }
 
 function removeWorker() {
-  removeModeWorkers()
+  const addButtonStateChecker = document.querySelector('.add-specification').firstElementChild.hasAttribute('disabled')
+
+  if (!addButtonStateChecker) {
+    removeModeWorkersOn()
+  } else {
+    removeModeWorkersOff()
+  }
 }
 
-function removeModeWorkers() {
+function removeModeWorkersOn() {
+  const addButtons = Array.from(document.querySelector('.add-specification').children)
+
+  addButtons.forEach(addButton => {
+    addButton.setAttribute('disabled', true)
+  })
+
   const workers = document.querySelectorAll('.worker')
   
   workers.forEach(worker => {
-    worker.closest('input').value = 'x'
+    const removeButton = document.createElement('button')
+    removeButton.setAttribute('class', 'remove-container')
+    removeButton.textContent = 'x'
+
+    worker.closest('.worker-container').append(removeButton)
+  })
+}
+
+function removeModeWorkersOff() {
+  const addButtons = Array.from(document.querySelector('.add-specification').children)
+
+  addButtons.forEach(addButton => {
+    addButton.removeAttribute('disabled')
+  })
+
+  const workers = document.querySelectorAll('.worker')
+  
+  workers.forEach(worker => {
+    console.log(worker)
+
+    const removeButton = worker.closest('.worker-container').querySelector('.remove-container')
+
+    removeButton.remove()
   })
 }
 
@@ -120,11 +166,14 @@ let i = 1;
 function addWorker() {
   i++
 
+  const workerContainer = document.createElement('span')
+  workerContainer.setAttribute('class', 'worker-container')
   const newInput = document.createElement('input')
   newInput.setAttribute('class', 'worker')
   newInput.setAttribute('id', `worker-${i}`)
   newInput.setAttribute('draggable', `true`)
-  document.querySelector('#idle-zone').append(newInput)
+  workerContainer.append(newInput)
+  document.querySelector('#idle-zone').append(workerContainer)
 }
 
 function addZone() {
