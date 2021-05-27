@@ -91,6 +91,12 @@ document.addEventListener('click', event => {
       addZone()
       dragDropFunctionlity()
       break
+    case 'remove-all-workers':
+      removeAllWorkers()
+      break
+    case 'remove-all-zones':
+      removeAllZones()
+      break
   }
 
   switch(clickedElementClass) {
@@ -99,6 +105,22 @@ document.addEventListener('click', event => {
       break
   }
 })
+
+function removeAllZones() {
+  const workers = document.querySelectorAll('.worker')
+  
+  workers.forEach(worker => document.querySelector('#idle-zone').append(worker))
+
+  const zones = document.querySelectorAll('.dyanmic-zones')
+  
+  zones.forEach(zone => zone.remove())
+}
+
+function removeAllWorkers() {
+  const workers = document.querySelectorAll('.worker')
+  
+  workers.forEach(worker => worker.remove())
+}
 
 function removeContainer(event) {
   event.target.parentElement.remove()
@@ -160,6 +182,7 @@ function addWorker() {
   const workerContainer = document.createElement('span')
   workerContainer.setAttribute('class', 'worker-container')
   const newInput = document.createElement('input')
+  newInput.setAttribute('placeholder', 'Type here...')
   newInput.setAttribute('class', 'worker')
   newInput.setAttribute('id', `worker-${i}`)
   newInput.setAttribute('draggable', `true`)
@@ -172,6 +195,7 @@ function addZone() {
   const titleInput = document.createElement('input')
   const removeButton = document.createElement('button')
   newZoneContainer.setAttribute('class', 'zone-container')
+  newZoneContainer.setAttribute('class', 'dyanmic-zones')
   removeButton.setAttribute('class', 'remove-zone')
   removeButton.textContent = "Remove"
   titleInput.setAttribute('type', 'text')
