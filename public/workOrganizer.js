@@ -3,6 +3,7 @@ function dragDropFunctionlity() {
 
   workers.forEach(worker => {
     worker.addEventListener('dragstart', dragStartHandler)
+    // worker.addEventListener('dragend', dragEndHandler)
   })
 
   function dragStartHandler(event) {
@@ -11,6 +12,10 @@ function dragDropFunctionlity() {
       event.target.classList.add('hide')
     }, 0)
   }
+  
+  // function dragEndHandler(event) {
+  //   console.log(event.target.closest('.zone'))
+  // }
 
   const zones = document.querySelectorAll('.zone')
 
@@ -86,80 +91,66 @@ document.addEventListener('click', event => {
       addZone()
       dragDropFunctionlity()
       break
-    case 'remove':
-      visibilityStateIdentifierRemove()
-      break
-    case 'remove-worker':
-      removeWorker()
-      break
   }
 
   switch(clickedElementClass) {
-    case 'remove-container':
-      removeFunctionality(event)
+    case 'remove-zone':
+      removeContainer(event)
       break
   }
 })
 
-function removeFunctionality(event) {
-  const containerElement = event.target.closest('.worker-container')
-
-  containerElement.remove()
+function removeContainer(event) {
+  event.target.parentElement.remove()
 }
 
-function visibilityStateIdentifierRemove() {
-  if (document.querySelector('.remove-specification').classList.contains('visibility-toggler')) {
-    document.querySelector('.remove-specification').classList.remove('visibility-toggler')
-  } else {
-    document.querySelector('.remove-specification').classList.add('visibility-toggler')
-  }
-}
+// function removeFunctionality(event) {
 
-function removeWorker() {
-  const addButtonStateChecker = document.querySelector('.add-specification').firstElementChild.hasAttribute('disabled')
+// }
 
-  if (!addButtonStateChecker) {
-    removeModeWorkersOn()
-  } else {
-    removeModeWorkersOff()
-  }
-}
+// function visibilityStateIdentifierRemove() {
+//   if (document.querySelector('.remove-specification').classList.contains('visibility-toggler')) {
+//     document.querySelector('.remove-specification').classList.remove('visibility-toggler')
+//   } else {
+//     document.querySelector('.remove-specification').classList.add('visibility-toggler')
+//   }
+// }
 
-function removeModeWorkersOn() {
-  const addButtons = Array.from(document.querySelector('.add-specification').children)
+// function removeWorker() {
+//   const addButtonStateChecker = document.querySelector('.add-specification').firstElementChild.hasAttribute('disabled')
 
-  addButtons.forEach(addButton => {
-    addButton.setAttribute('disabled', true)
-  })
+//   if (!addButtonStateChecker) {
+//     removeModeWorkersOn()
+//   } else {
+//     removeModeWorkersOff()
+//   }
+// }
 
-  const workers = document.querySelectorAll('.worker')
+// function removeModeWorkersOn() {
+//   const addButtons = Array.from(document.querySelector('.add-specification').children)
+
+//   addButtons.forEach(addButton => {
+//     addButton.setAttribute('disabled', true)
+//   })
+// }
+
+// function removeModeWorkersOff() {
+//   const addButtons = Array.from(document.querySelector('.add-specification').children)
+
+//   addButtons.forEach(addButton => {
+//     addButton.removeAttribute('disabled')
+//   })
+
+//   const workers = document.querySelectorAll('.worker')
   
-  workers.forEach(worker => {
-    const removeButton = document.createElement('button')
-    removeButton.setAttribute('class', 'remove-container')
-    removeButton.textContent = 'x'
+//   workers.forEach(worker => {
+//     console.log(worker)
 
-    worker.closest('.worker-container').append(removeButton)
-  })
-}
+//     const removeButton = worker.closest('.worker-container').querySelector('.remove-container')
 
-function removeModeWorkersOff() {
-  const addButtons = Array.from(document.querySelector('.add-specification').children)
-
-  addButtons.forEach(addButton => {
-    addButton.removeAttribute('disabled')
-  })
-
-  const workers = document.querySelectorAll('.worker')
-  
-  workers.forEach(worker => {
-    console.log(worker)
-
-    const removeButton = worker.closest('.worker-container').querySelector('.remove-container')
-
-    removeButton.remove()
-  })
-}
+//     removeButton.remove()
+//   })
+// }
 
 let i = 1;
 
@@ -179,11 +170,17 @@ function addWorker() {
 function addZone() {
   const newZoneContainer = document.createElement('div')
   const titleInput = document.createElement('input')
+  const removeButton = document.createElement('button')
+  newZoneContainer.setAttribute('class', 'zone-container')
+  removeButton.setAttribute('class', 'remove-zone')
+  removeButton.textContent = "Remove"
+  titleInput.setAttribute('type', 'text')
   titleInput.setAttribute('class', 'zone-title')
   titleInput.setAttribute('placeholder', 'Name the zone')
   const newDiv = document.createElement('div')
   newDiv.setAttribute('class', 'zone')
   newZoneContainer.append(titleInput)
+  newZoneContainer.append(removeButton)
   newZoneContainer.append(newDiv)
   document.querySelector('.grid-container').append(newZoneContainer)
 }

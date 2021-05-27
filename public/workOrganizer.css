@@ -68,12 +68,8 @@ div {
   background-color: #555;
 }
 
-/* .add-specification {
-  visibility: hidden;
-} */
-
-.visibility-toggler {
-  visibility: hidden;
+.add-specification {
+  display: flex;
 }
 
 .hide {
@@ -104,6 +100,21 @@ div {
 
 .worker-container {
   display: flex;
+}
+
+#delete-zone {
+  align-self: flex-end;
+  border:3px dashed yellow;
+}
+
+.remove-zone {
+  background-color: red;
+  color: white;
+  border:2px solid red;
+}
+
+.remove-zone:active {
+  background-color: rgb(255, 51, 51);
 }
 
 /* 
